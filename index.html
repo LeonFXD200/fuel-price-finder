@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fuel Price Finder</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">&#x26FD;</div>
+      <h1>Fuel Price Finder</h1>
+      <p class="subtitle">Find the cheapest fuel near you</p>
+    </header>
+
+    <main>
+      <div class="location-section">
+        <button id="findBtn" class="btn-primary">
+          <span class="btn-icon">&#x1F4CD;</span>
+          Find Fuel Prices Near Me
+        </button>
+        <p id="locationStatus" class="location-status"></p>
+      </div>
+
+      <div id="loadingSpinner" class="spinner hidden">
+        <div class="spin"></div>
+        <p>Fetching prices nearby...</p>
+      </div>
+
+      <div id="errorBox" class="error-box hidden"></div>
+
+      <div id="resultsSection" class="results hidden">
+        <h2 id="resultsHeading">Fuel Prices Near You</h2>
+        <div id="priceCards" class="price-grid"></div>
+        <p class="disclaimer">
+          Prices are indicative and sourced from community-reported data.
+          Always confirm at the pump.
+        </p>
+      </div>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
