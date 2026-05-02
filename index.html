@@ -8,6 +8,7 @@
 </head>
 <body>
   <div class="container">
+
     <header>
       <div class="logo">&#x26FD;</div>
       <h1>Fuel Price Finder</h1>
@@ -15,31 +16,117 @@
     </header>
 
     <main>
+
+      <!-- ── Primary action ── -->
       <div class="location-section">
         <button id="findBtn" class="btn-primary">
           <span class="btn-icon">&#x1F4CD;</span>
-          Find Fuel Prices Near Me
+          Find Stations Near Me
         </button>
         <p id="locationStatus" class="location-status"></p>
       </div>
 
+      <!-- ── Search controls (shown after first search) ── -->
+      <div class="search-controls hidden" id="searchControls">
+
+        <div class="control-row">
+          <!-- Distance slider -->
+          <div class="radius-control">
+            <label for="radiusSlider">
+              &#x1F4CF; Search radius: <strong><span id="radiusLabel">5</span> km</strong>
+            </label>
+            <input type="range" id="radiusSlider" min="1" max="25" value="5" step="1" />
+            <div class="radius-ticks">
+              <span>1km</span><span>5km</span><span>10km</span><span>15km</span><span>20km</span><span>25km</span>
+            </div>
+          </div>
+
+          <!-- Sort -->
+          <div class="sort-control">
+            <label for="sortSelect">Sort by</label>
+            <select id="sortSelect">
+              <option value="price">&#x1F4B0; Cheapest Price</option>
+              <option value="distance">&#x1F4CF; Nearest First</option>
+            </select>
+          </div>
+
+          <!-- Refresh -->
+          <button id="refreshBtn" class="btn-secondary">&#x1F504; Refresh</button>
+        </div>
+
+        <!-- Fuel type filter -->
+        <div class="fuel-filter-section">
+          <span class="filter-label">Fuel type:</span>
+          <div class="fuel-filter-buttons" id="fuelFilterButtons">
+            <button class="filter-btn active" data-fuel="all">All Types</button>
+            <button class="filter-btn" data-fuel="unleaded">&#x1F7E2; Unleaded</button>
+            <button class="filter-btn" data-fuel="premium">&#x1F534; Premium</button>
+            <button class="filter-btn" data-fuel="diesel">&#x1F7E1; Diesel</button>
+            <button class="filter-btn" data-fuel="e10">&#x1F7E4; E10</button>
+            <button class="filter-btn" data-fuel="super">&#x1F535; Super Plus</button>
+            <button class="filter-btn" data-fuel="lpg">&#x26AA; LPG</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ── Loading spinner ── -->
       <div id="loadingSpinner" class="spinner hidden">
         <div class="spin"></div>
-        <p>Fetching prices nearby...</p>
+        <p id="loadingText">Fetching stations nearby&hellip;</p>
       </div>
 
+      <!-- ── Error box ── -->
       <div id="errorBox" class="error-box hidden"></div>
 
+      <!-- ── Summary bar ── -->
+      <div id="summaryBar" class="summary-bar hidden">
+        <div class="summary-stat">
+          <span id="stationCount" class="stat-value">0</span>
+          <small class="stat-label">stations found</small>
+        </div>
+        <div class="summary-stat highlight">
+          <span id="cheapestPrice" class="stat-value">&#x2014;</span>
+          <small id="cheapestLabel" class="stat-label">cheapest unleaded</small>
+        </div>
+        <div class="summary-stat">
+          <span id="avgPrice" class="stat-value">&#x2014;</span>
+          <small class="stat-label">area average</small>
+        </div>
+        <button id="routeCheapestBtn" class="btn-route-cheapest">
+          &#x1F5FA;&#xFE0F; Route to Cheapest
+        </button>
+      </div>
+
+      <!-- ── Route planner panel ── -->
+      <div id="routePlanner" class="route-planner hidden">
+        <div class="route-planner-inner">
+          <h3>&#x1F6E3;&#xFE0F; Plan Your Route</h3>
+          <p>Enter your final destination and we&rsquo;ll route you via the cheapest petrol station on the way.</p>
+          <div class="route-input-row">
+            <input
+              type="text"
+              id="destinationInput"
+              placeholder="e.g. London Bridge, Manchester City Centre&hellip;"
+            />
+            <button id="planRouteBtn" class="btn-primary">Open in Maps</button>
+          </div>
+          <p class="route-note" id="routeNote"></p>
+          <button id="closeRoutePlanner" class="btn-ghost">&#x2715; Close</button>
+        </div>
+      </div>
+
+      <!-- ── Results ── -->
       <div id="resultsSection" class="results hidden">
-        <h2 id="resultsHeading">Fuel Prices Near You</h2>
-        <div id="priceCards" class="price-grid"></div>
+        <div id="stationList" class="station-list"></div>
         <p class="disclaimer">
-          Prices are indicative and sourced from community-reported data.
-          Always confirm at the pump.
+          &#x26A0;&#xFE0F; Prices shown are <em>estimated</em> based on typical brand averages and may not reflect current pump prices. Always confirm on arrival.
         </p>
       </div>
+
     </main>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
